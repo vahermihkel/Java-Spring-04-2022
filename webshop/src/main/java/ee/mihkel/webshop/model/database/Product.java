@@ -1,4 +1,4 @@
-package ee.mihkel.webshop;
+package ee.mihkel.webshop.model.database;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

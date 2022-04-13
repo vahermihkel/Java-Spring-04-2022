@@ -1,9 +1,10 @@
-package ee.mihkel.webshop;
+package ee.mihkel.webshop.controller;
 
+import ee.mihkel.webshop.model.database.Product;
+import ee.mihkel.webshop.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
