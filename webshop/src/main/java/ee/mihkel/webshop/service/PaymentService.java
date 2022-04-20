@@ -37,10 +37,10 @@ public class PaymentService {
     @Autowired
     RestTemplate restTemplate;
 
-    public String getPaymentLink(String amount) {
+    public String getPaymentLink(double amount, Long orderId) {
         // aktiveerisin koodibloki
         // ctrl + alt + m
-        EveryPayData everyPayData = buildEveryPayData(amount);
+        EveryPayData everyPayData = buildEveryPayData(amount, orderId);
 
         // urli tõstame application.properties sisse
         String url = everyPayBaseUrl + "/payments/oneoff";
@@ -60,15 +60,15 @@ public class PaymentService {
         return "";
     }
 
-    private EveryPayData buildEveryPayData(String amount) {
+    private EveryPayData buildEveryPayData(double amount, Long orderId) {
         // castimine
 //        long longNumber = 10L;
 //        int intNumber = (int) longNumber;
         EveryPayData everyPayData = new EveryPayData();
         everyPayData.setApi_username(username);
         everyPayData.setAccount_name(account);
-        everyPayData.setAmount(Integer.parseInt(amount)); // parsimine
-        everyPayData.setOrder_reference("abs" + Math.random());
+        everyPayData.setAmount(amount);
+        everyPayData.setOrder_reference(orderId.toString());
         everyPayData.setNonce("ad" + Math.random() + new Date());
         everyPayData.setTimestamp(ZonedDateTime.now().toString());
         System.out.println(new Date().toString()); // log4j2

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Getter
@@ -16,7 +17,7 @@ import javax.persistence.Id;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private double price;
@@ -25,3 +26,12 @@ public class Product {
     private String description;
     private String category;
 }
+
+// 1 Product
+// 2 Product
+// 3 Product
+
+// 1 Order
+// 2 Order
+
+// 4 Product
