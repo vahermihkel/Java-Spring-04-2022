@@ -1,8 +1,8 @@
 package ee.mihkel.webshop.service;
 
-import ee.mihkel.webshop.model.input.OmnivaParcelMachine;
-import ee.mihkel.webshop.model.input.SmartpostParcelMachine;
-import ee.mihkel.webshop.model.output.ParcelMachines;
+import ee.mihkel.webshop.model.request.input.OmnivaParcelMachine;
+import ee.mihkel.webshop.model.request.input.SmartpostParcelMachine;
+import ee.mihkel.webshop.model.request.output.ParcelMachines;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;

@@ -1,22 +1,16 @@
 package ee.mihkel.webshop.controller;
 
 import ee.mihkel.webshop.model.database.Product;
-import ee.mihkel.webshop.model.input.EveryPayResponse;
-import ee.mihkel.webshop.model.output.EveryPayData;
+import ee.mihkel.webshop.model.request.input.EveryPayResponse;
+import ee.mihkel.webshop.model.request.output.EveryPayData;
 import ee.mihkel.webshop.service.OrderService;
 import ee.mihkel.webshop.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -32,7 +26,7 @@ public class PaymentController {
     OrderService orderService;
 
     @PostMapping("payment")  // localhost:8080/payment    Body    80   text
-    public String getPaymentLink(@RequestBody List<Product> products) {
+    public ResponseEntity<String> getPaymentLink(@RequestBody List<Product> products) {
         // Tooted --- nimedega+hindadega
         // Maksma --- Tellimuse nr-t
         // Salvestan andmebaasi -> maksmata kujul
@@ -41,7 +35,7 @@ public class PaymentController {
         List<Product> originalProducts = orderService.getAllProductsFromDb(products);
         double orderSum = orderService.calculateOrderSum(originalProducts);
         Long id = orderService.saveToDatabase(originalProducts, orderSum);
-        return paymentService.getPaymentLink(orderSum, id);
+        return ResponseEntity.ok().body(paymentService.getPaymentLink(orderSum, id));
     }
 
 //    @PostMapping("check-payment")

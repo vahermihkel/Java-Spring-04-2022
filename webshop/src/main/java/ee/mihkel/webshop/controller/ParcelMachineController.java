@@ -1,10 +1,11 @@
 package ee.mihkel.webshop.controller;
 
-import ee.mihkel.webshop.model.output.ParcelMachines;
+import ee.mihkel.webshop.model.request.output.ParcelMachines;
 import ee.mihkel.webshop.service.ParcelMachineService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +19,11 @@ public class ParcelMachineController {
 
     @Operation(description = "Nii Omniva kui SmartPost pakiautomaatide kättesaamine")
     @GetMapping("parcel-machines/{country}")
-    public ParcelMachines getParcelMachines(@PathVariable String country) {
+    public ResponseEntity<ParcelMachines> getParcelMachines(@PathVariable String country) {
         log.info("Taking parcel machines {}", country);
         country = country.toUpperCase();
-        return parcelMachineService.getParcelMachines(country);
+        return ResponseEntity.ok()
+                .body(parcelMachineService.getParcelMachines(country));
     }
 }
 

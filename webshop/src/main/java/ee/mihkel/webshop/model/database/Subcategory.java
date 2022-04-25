@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
 
 @Getter
@@ -13,26 +12,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Product {
+public class Subcategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private double price;
-    private String imgSrc;
-    private boolean active;
-    private String description;
-    private int stock;
 
-    @OneToOne
-    private Subcategory category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Category category;
 }
-
-// 1 Product
-// 2 Product
-// 3 Product
-
-// 1 Order
-// 2 Order
-
-// 4 Product

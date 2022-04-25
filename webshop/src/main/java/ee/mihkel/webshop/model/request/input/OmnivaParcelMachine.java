@@ -1,4 +1,4 @@
-package ee.mihkel.webshop.model.input;
+package ee.mihkel.webshop.model.request.input;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
