@@ -7,9 +7,7 @@ import ee.mihkel.webshop.service.OrderService;
 import ee.mihkel.webshop.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,9 +36,9 @@ public class PaymentController {
         return ResponseEntity.ok().body(paymentService.getPaymentLink(orderSum, id));
     }
 
-//    @PostMapping("check-payment")
-//    public boolean checkIfPaid() {
-//        // Kui on makstud, muudan andmebaasis makstuks
-//        return true;
-//    }
+    @PostMapping("check-payment")
+    public ResponseEntity<Boolean> checkIfPaid(@RequestParam Long orderId, @RequestParam String paymentRef) {
+        // Kui on makstud, muudan andmebaasis makstuks
+        return ResponseEntity.ok().body(paymentService.checkIfOrderPaid(orderId, paymentRef));
+    }
 }

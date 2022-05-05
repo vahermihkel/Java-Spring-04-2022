@@ -1,5 +1,6 @@
 package ee.mihkel.webshop.service;
 
+import ee.mihkel.webshop.model.request.input.EveryPayCheckPaymentResponse;
 import ee.mihkel.webshop.model.request.input.EveryPayResponse;
 import ee.mihkel.webshop.model.request.output.EveryPayData;
 import lombok.extern.log4j.Log4j2;
@@ -78,5 +79,28 @@ public class PaymentService {
         everyPayData.setCustomer_url(customerUrl); // serverisse üles heroku --
         // java ja front-end (Angular/React)
         return everyPayData;
+    }
+
+    public Boolean checkIfOrderPaid(Long orderId, String paymentRef) {
+
+        // restTemplate välised HTTP päringud   --->  autowired (üks mälukoht)
+        // 1. URL    2. GET/POST    3.   Body + Headers
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Basic " + credentials);
+        HttpEntity httpEntity = new HttpEntity<>(headers);
+        ResponseEntity<EveryPayCheckPaymentResponse> response = restTemplate.exchange(everyPayBaseUrl + "/payments/" + paymentRef + "?" + username,
+                HttpMethod.GET,httpEntity, EveryPayCheckPaymentResponse.class);
+
+        if (response.getStatusCodeValue() == 200 &&  response.getBody() != null) {
+            String paymentState = response.getBody().getPayment_state();
+            if (paymentState.equals("failed") || paymentState.equals("abandoned")) {
+                return false;
+            } else if (paymentState.equals("settled")) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
