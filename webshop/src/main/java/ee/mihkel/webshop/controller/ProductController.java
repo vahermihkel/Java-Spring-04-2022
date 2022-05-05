@@ -83,11 +83,13 @@ public class ProductController {
     public ResponseEntity<List<Product>> decreaseStock(@RequestBody Product product) throws ExecutionException {
         Product updatedProduct = productCache.getProduct(product.getId());
         int productStock = updatedProduct.getStock();
-        // TODO: IF CHECK
-        updatedProduct.setStock(--productStock);
-        productRepository.save(updatedProduct);
-        productCache.updateCache(updatedProduct);
+        // TODO: ERRORi kuvamine
+        if (productStock > 0) {
+            updatedProduct.setStock(--productStock);
+            productRepository.save(updatedProduct);
+            productCache.updateCache(updatedProduct);
 //        productCache.emptyCache();
+        }
         return ResponseEntity.ok()
                 .body(productRepository.getAllByOrderByIdAsc());
     }

@@ -1,6 +1,7 @@
 package ee.mihkel.webshop.configuration;
 
 import ee.mihkel.webshop.authentication.TokenParser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,10 +13,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${token.key}")
+    private String key;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        super.configure(http);
         TokenParser tokenParser = new TokenParser(authenticationManager());
+        tokenParser.setKey(key);
 
         http
                 .cors().and().headers().xssProtection().disable().and()

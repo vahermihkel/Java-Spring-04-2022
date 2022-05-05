@@ -20,6 +20,7 @@ public class Order {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="orderSeq")
     private Long id;
     private double orderSum;
+    private PaymentState paymentState;
 
     @ManyToMany
     private List<Product> products;

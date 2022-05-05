@@ -2,6 +2,7 @@ package ee.mihkel.webshop.service;
 
 import ee.mihkel.webshop.cache.ProductCache;
 import ee.mihkel.webshop.model.database.Order;
+import ee.mihkel.webshop.model.database.PaymentState;
 import ee.mihkel.webshop.model.database.Product;
 import ee.mihkel.webshop.repository.OrderRepository;
 import ee.mihkel.webshop.repository.ProductRepository;
@@ -43,6 +44,7 @@ public class OrderService {
         Order order = new Order();
         order.setOrderSum(orderSum);
         order.setProducts(products);
+        order.setPaymentState(PaymentState.INITIAL);
         Order savedOrder = orderRepository.save(order);
         return savedOrder.getId();
     }

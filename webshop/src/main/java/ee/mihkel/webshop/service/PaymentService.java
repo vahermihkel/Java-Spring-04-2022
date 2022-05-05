@@ -1,8 +1,11 @@
 package ee.mihkel.webshop.service;
 
+import ee.mihkel.webshop.model.database.Order;
+import ee.mihkel.webshop.model.database.PaymentState;
 import ee.mihkel.webshop.model.request.input.EveryPayCheckPaymentResponse;
 import ee.mihkel.webshop.model.request.input.EveryPayResponse;
 import ee.mihkel.webshop.model.request.output.EveryPayData;
+import ee.mihkel.webshop.repository.OrderRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +40,9 @@ public class PaymentService {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     public String getPaymentLink(double amount, Long orderId) {
         // aktiveerisin koodibloki
@@ -94,18 +100,31 @@ public class PaymentService {
 
         if (response.getStatusCodeValue() == 200 &&  response.getBody() != null) {
             String paymentState = response.getBody().getPayment_state();
-            if (paymentState.equals("failed") || paymentState.equals("abandoned")) {
-                return false;
-            } else if (paymentState.equals("settled")) {
-                return true;
+            Order order = orderRepository.findById(orderId).get();
+            // switch --> if else
+            // switch võimaldab kontrollida ühte muutujat erinevate väärtuste vastu
+            switch (paymentState) {
+                case "failed":
+                    order.setPaymentState(PaymentState.FAILED);
+                    return false;
+                case "voided":
+                    order.setPaymentState(PaymentState.VOIDED);
+                    return false;
+                case "abandoned":
+                    order.setPaymentState(PaymentState.ABANDONED);
+                    return true;
+                case "settled":
+                    order.setPaymentState(PaymentState.SETTLED);
+                    return true;
             }
-            // 1. otsime andmebaasist ID alusel -- orderId
-            // 2. tekitame Orderile Enum-i: paymentState
-            // 3. kui läheme maksma läheb andmebaasi paymentState - Initial
+            orderRepository.save(order);
+            // 1. tekitame Orderile Enum-i: paymentState
+            // 2. kui läheme maksma läheb andmebaasi paymentState - Initial
+            // 3. otsime andmebaasist ID alusel -- orderId
             // 4. SIIN - muudame selle Initiali ära ja paneme asemele "failed"   /   "abandoned"  / "settled
+            // TODO: cron job
             // 5. HILJEM - cron job otsib kõik Initialid ülesse ja uuesti läheb SIIA funktsiooni
 
-            // 11.00
         }
 
         return false;
