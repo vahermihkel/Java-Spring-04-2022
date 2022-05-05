@@ -99,6 +99,13 @@ public class PaymentService {
             } else if (paymentState.equals("settled")) {
                 return true;
             }
+            // 1. otsime andmebaasist ID alusel -- orderId
+            // 2. tekitame Orderile Enum-i: paymentState
+            // 3. kui läheme maksma läheb andmebaasi paymentState - Initial
+            // 4. SIIN - muudame selle Initiali ära ja paneme asemele "failed"   /   "abandoned"  / "settled
+            // 5. HILJEM - cron job otsib kõik Initialid ülesse ja uuesti läheb SIIA funktsiooni
+
+            // 11.00
         }
 
         return false;
