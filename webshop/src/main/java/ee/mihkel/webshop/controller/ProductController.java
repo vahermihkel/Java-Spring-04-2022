@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
     //List<Product> products = new ArrayList<>();
 
