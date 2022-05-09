@@ -60,7 +60,7 @@ public class ProductController {
                 .body(productRepository.getAllByOrderByIdAsc());
     }
 
-    @DeleteMapping("products")
+    @DeleteMapping("delete-all-products")
     public ResponseEntity<String> deleteAllProduct() {
         productRepository.flush();
         productCache.emptyCache();
