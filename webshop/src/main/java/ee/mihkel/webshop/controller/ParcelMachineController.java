@@ -2,6 +2,7 @@ package ee.mihkel.webshop.controller;
 
 import ee.mihkel.webshop.model.request.output.ParcelMachines;
 import ee.mihkel.webshop.service.ParcelMachineService;
+import ee.mihkel.webshop.service.ParcelMachineServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

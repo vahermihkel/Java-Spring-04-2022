@@ -1,8 +1,6 @@
 package ee.mihkel.webshop.controller;
 
 import ee.mihkel.webshop.model.database.Product;
-import ee.mihkel.webshop.model.request.input.EveryPayResponse;
-import ee.mihkel.webshop.model.request.output.EveryPayData;
 import ee.mihkel.webshop.service.OrderService;
 import ee.mihkel.webshop.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
