@@ -1,6 +1,7 @@
 package ee.mihkel.webshop.service;
 
 import ee.mihkel.webshop.model.database.Product;
+import ee.mihkel.webshop.model.request.input.CartProduct;
 
 import java.util.List;
 
