@@ -5,12 +5,13 @@ function Admin() {
   return (
   <div>
       <Link to="/admin/lisa-toode">
-        <Button>Lisa toode</Button>
+        <Button variant="success">Lisa toode</Button>
       </Link>   
       <Link to="/admin/halda-tooted">
         <Button>Halda tooteid</Button>
-      </Link>     
-  </div>)
+      </Link>    
+  </div>
+  )
 }
 
 export default Admin;

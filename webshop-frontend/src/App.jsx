@@ -3,6 +3,8 @@ import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
 import AddProduct from './pages/AddProduct';
 import Admin from './pages/Admin';
+import Cart from './pages/Cart';
+import MainPage from './pages/MainPage';
 import MaintainProducts from './pages/MaintainProducts';
 
 
@@ -20,8 +22,9 @@ function App() {
         </Navbar>
         <Routes>
           {/* localhost:3000/ --> Avaleht*/}
-          <Route path='' exact element={<div>Avaleht</div>} />
-          <Route path='ostukorv' exact element={<div>Ostukorv</div>} />
+          <Route path='' exact element={ <MainPage /> } />
+          <Route path='ostukorv' exact element={ <Cart /> } />
+          {/* localhost:3000/admin  Admin komponenti */}
           <Route path='admin' exact element={ <Admin /> } />
           <Route path='admin/lisa-toode' exact element={ <AddProduct /> } />
           <Route path='admin/halda-tooted' exact element={ <MaintainProducts /> } />

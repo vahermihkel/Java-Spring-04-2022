@@ -9,6 +9,12 @@ function MaintainProducts() {
     // parempoolne funktsioon uuendab vasakpoolset muutujat ja sellega seoses toimub ka uuendus
     // useState sulgude sees on vasakpoolse muutuja algväärtus
 
+  // let products2 = [];
+
+  // function setProducts2(newValue) {
+  //   products2 = newValue;
+  // }
+
   useEffect(()=>{ // useEffect ei lase teist korda siia funktsiooni sisse minna
     fetch(baseUrl + "/products").then(res => res.json()) // response (body+status+headers+time)
     .then(body => setProducts(body)); // teine .then tähistab body võtmist
@@ -20,7 +26,7 @@ function MaintainProducts() {
       body: JSON.stringify(productClicked),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjEwMjA1Mn0.psdWdOo5LEFarBoCDMrYFRVuvI2YG8W8Vm6YfjW1XSgM0ZJJZwxQv6-SUIV6IIvQkgQ42UL5x_mG2oNwaTDuQg"
+        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjI2OTM2MH0.jJlJS9ng0JwccZTSVO53yhLrIQCyeSE66_DX0ML1EVoCJWhTNLbMdGHYcTZd-KS1gYJVJ8G7GnQL46hbvOtsig"
       }
     }).then(res => res.json())
     .then(body => setProducts(body));
@@ -32,7 +38,7 @@ function MaintainProducts() {
       body: JSON.stringify(productClicked),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjEwMjA1Mn0.psdWdOo5LEFarBoCDMrYFRVuvI2YG8W8Vm6YfjW1XSgM0ZJJZwxQv6-SUIV6IIvQkgQ42UL5x_mG2oNwaTDuQg"
+        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjI2OTM2MH0.jJlJS9ng0JwccZTSVO53yhLrIQCyeSE66_DX0ML1EVoCJWhTNLbMdGHYcTZd-KS1gYJVJ8G7GnQL46hbvOtsig"
       }
     }).then(res => res.json())
     .then(body => setProducts(body));
@@ -42,7 +48,7 @@ function MaintainProducts() {
     fetch(baseUrl + "/products/" + productClicked.id, {
       method: "DELETE",
       headers: {
-        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjEwMjA1Mn0.psdWdOo5LEFarBoCDMrYFRVuvI2YG8W8Vm6YfjW1XSgM0ZJJZwxQv6-SUIV6IIvQkgQ42UL5x_mG2oNwaTDuQg"
+        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjI2OTM2MH0.jJlJS9ng0JwccZTSVO53yhLrIQCyeSE66_DX0ML1EVoCJWhTNLbMdGHYcTZd-KS1gYJVJ8G7GnQL46hbvOtsig"
       }
     }).then(res => res.json())
     .then(body => setProducts(body));
@@ -57,9 +63,9 @@ function MaintainProducts() {
           <tr>
             <th>Nimi</th>
             <th>Hind</th>
-            <th>Pilt</th>
             <th>Kirjeldus</th>
             <th>Kogus</th>
+            <th>Pilt</th>
             <th>Tegevused</th>
           </tr>
         { products.map(element => 

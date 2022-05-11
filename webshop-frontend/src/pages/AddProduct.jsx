@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useRef } from "react"; // reacti erikood, HOOK
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function AddProduct() {
   const nameRef = useRef();
@@ -9,6 +9,7 @@ function AddProduct() {
   const descriptionRef = useRef();
   const stockRef = useRef();
   const activeRef = useRef();
+  const navigation = useNavigate();
   //document.getElementById("name").value
 
   function addNewProduct() {
@@ -26,10 +27,10 @@ function AddProduct() {
         body: JSON.stringify(newProduct),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjEwMjA1Mn0.psdWdOo5LEFarBoCDMrYFRVuvI2YG8W8Vm6YfjW1XSgM0ZJJZwxQv6-SUIV6IIvQkgQ42UL5x_mG2oNwaTDuQg"
+          "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjI2OTM2MH0.jJlJS9ng0JwccZTSVO53yhLrIQCyeSE66_DX0ML1EVoCJWhTNLbMdGHYcTZd-KS1gYJVJ8G7GnQL46hbvOtsig"
         }
       }
-    );
+    ).then(() => navigation("/admin/halda-tooted"));
   }
 
   return (

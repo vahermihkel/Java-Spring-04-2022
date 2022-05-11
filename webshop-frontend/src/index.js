@@ -13,3 +13,11 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+// package.json (pom.xml) - kõik dependencied
+// "npm install"
+
+// Routing (href ei ole kasutusel), <Link>
+// npm install react-router-dom
+
+// BrowserRouter võtab koodilõigud react-router-dom seest
