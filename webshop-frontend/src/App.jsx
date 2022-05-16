@@ -1,22 +1,52 @@
+import { useEffect, useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import AddProduct from './pages/AddProduct';
 import Admin from './pages/Admin';
 import Cart from './pages/Cart';
+import Login from './pages/Login';
 import MainPage from './pages/MainPage';
 import MaintainProducts from './pages/MaintainProducts';
+import Signup from './pages/Signup';
 
 
 function App() {
+  const [token, setToken] = useState(null);
+  const navigate = useNavigate();
+  // useContext();
+
+  useEffect(() => {
+    if (sessionStorage.getItem("authData")) {
+      const authData = JSON.parse(sessionStorage.getItem("authData"));
+      const expiration = new Date(authData.expiration);
+      if (expiration > new Date()) {
+        // token = authData.token;
+        setToken(authData.token);
+      } else {
+        sessionStorage.removeItem("authData");
+      }
+    }
+  },[]);
+  
+
+  function logout() {
+    sessionStorage.removeItem("authData");
+    setToken(null);
+    navigate("/");
+  }
+
   return (
     <div className="App">
         <Navbar bg="dark" variant="dark">
           <Container>
           <Navbar.Brand as={Link} to="/">Pood</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/admin">Adminstraatori vaatesse</Nav.Link>
+ { token && <Nav.Link as={Link} to="/admin">Adminstraatori vaatesse</Nav.Link>}
             <Nav.Link as={Link} to="/ostukorv">Ostukorvi</Nav.Link>
+ { !token && <Nav.Link as={Link} to="/logi-sisse">Logi sisse</Nav.Link>}
+ { !token && <Nav.Link as={Link} to="/registreeru">Registreeru</Nav.Link>}
+ { token && <Nav.Link onClick={() => logout()}>Logi välja</Nav.Link>}
           </Nav>
           </Container>
         </Navbar>
@@ -24,11 +54,18 @@ function App() {
           {/* localhost:3000/ --> Avaleht*/}
           <Route path='' exact element={ <MainPage /> } />
           <Route path='ostukorv' exact element={ <Cart /> } />
-          {/* localhost:3000/admin  Admin komponenti */}
-          <Route path='admin' exact element={ <Admin /> } />
-          <Route path='admin/lisa-toode' exact element={ <AddProduct /> } />
-          <Route path='admin/halda-tooted' exact element={ <MaintainProducts /> } />
-          <Route path='admin/muuda-toode' exact element={<div>Toote muutmise leht</div>} />
+          <Route path='logi-sisse' exact element={ <Login /> } />
+          <Route path='registreeru' exact element={ <Signup /> } />
+      { token && 
+          <Route> 
+            <Route path='admin' exact element={ <Admin /> } />
+            <Route path='admin/lisa-toode' exact element={ <AddProduct /> } />
+            <Route path='admin/halda-tooted' exact element={ <MaintainProducts /> } />
+            <Route path='admin/muuda-toode' exact element={<div>Toote muutmise leht</div>} />
+          </Route>
+          }
+      { !token && <Route path='admin/*' exact element={ <Login /> } />}
+          <Route path="*" exact element={<div>404 Not Found</div>} />
         </Routes>
     </div>
   );

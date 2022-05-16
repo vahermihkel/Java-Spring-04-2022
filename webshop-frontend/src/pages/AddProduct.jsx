@@ -21,13 +21,24 @@ function AddProduct() {
       stock: stockRef.current.value,
       active: activeRef.current.checked,
     }
+
+    const authData = JSON.parse(sessionStorage.getItem("authData"));
+    const expiration = new Date(authData.expiration);
+    let token;
+    if (expiration > new Date()) {
+      token = authData.token;
+    } else {
+      sessionStorage.removeItem("authData");
+    }
+
     fetch("http://localhost:8080/products",
       {
         method: "POST",
         body: JSON.stringify(newProduct),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjI2OTM2MH0.jJlJS9ng0JwccZTSVO53yhLrIQCyeSE66_DX0ML1EVoCJWhTNLbMdGHYcTZd-KS1gYJVJ8G7GnQL46hbvOtsig"
+          "Authorization": `Bearer ${token}`
+          // "Authorization": "Bearer " + token
         }
       }
     ).then(() => navigation("/admin/halda-tooted"));

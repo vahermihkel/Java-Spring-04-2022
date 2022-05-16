@@ -15,10 +15,24 @@ function MaintainProducts() {
   //   products2 = newValue;
   // }
 
+  const authData = JSON.parse(sessionStorage.getItem("authData"));
+  const expiration = new Date(authData.expiration);
+  let token;
+  if (expiration > new Date()) {
+    token = authData.token;
+  } else {
+    sessionStorage.removeItem("authData");
+  }
+
+
   useEffect(()=>{ // useEffect ei lase teist korda siia funktsiooni sisse minna
     fetch(baseUrl + "/products").then(res => res.json()) // response (body+status+headers+time)
     .then(body => setProducts(body)); // teine .then tähistab body võtmist
   },[]); // kandiliste sulgude sees on list muutujatest kelle muutumisel ta ikka teeb uuesti
+
+  if (token === null) {
+    return (<div>Sul ei ole õigust seda lehte vaadata</div>)
+  }
 
   function decreaseQuantity(productClicked) {
     fetch(baseUrl + "/decrease-stock", {
@@ -26,7 +40,7 @@ function MaintainProducts() {
       body: JSON.stringify(productClicked),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjI2OTM2MH0.jJlJS9ng0JwccZTSVO53yhLrIQCyeSE66_DX0ML1EVoCJWhTNLbMdGHYcTZd-KS1gYJVJ8G7GnQL46hbvOtsig"
+        "Authorization": "Bearer " + token
       }
     }).then(res => res.json())
     .then(body => setProducts(body));
@@ -38,7 +52,7 @@ function MaintainProducts() {
       body: JSON.stringify(productClicked),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjI2OTM2MH0.jJlJS9ng0JwccZTSVO53yhLrIQCyeSE66_DX0ML1EVoCJWhTNLbMdGHYcTZd-KS1gYJVJ8G7GnQL46hbvOtsig"
+        "Authorization": "Bearer " + token
       }
     }).then(res => res.json())
     .then(body => setProducts(body));
@@ -48,7 +62,7 @@ function MaintainProducts() {
     fetch(baseUrl + "/products/" + productClicked.id, {
       method: "DELETE",
       headers: {
-        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjI2OTM2MH0.jJlJS9ng0JwccZTSVO53yhLrIQCyeSE66_DX0ML1EVoCJWhTNLbMdGHYcTZd-KS1gYJVJ8G7GnQL46hbvOtsig"
+        "Authorization": "Bearer " + token
       }
     }).then(res => res.json())
     .then(body => setProducts(body));

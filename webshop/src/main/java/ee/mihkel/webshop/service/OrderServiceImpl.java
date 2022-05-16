@@ -19,6 +19,31 @@ import java.util.stream.Collectors;
 @Log4j2
 public class OrderServiceImpl implements OrderService {
 
+    // KODUS:
+    // 1. Editimine print-screenidena
+
+    // JÄRGMINE KORD:
+    // 1. Backendis Order salvestada koos isikuga
+    // 2. Tagastada kõik orderid vastavalt kes küsib
+    // 3. Valideerimised backis
+    // 4. Frontend käsitleb erroreid
+
+    // KODUS:
+    // 1. Frontendis Kategooria - lisada, kustutada, vaadata
+    // 2. Frontendis Orderid salvestada
+    // 3. Frontendis selle kasutaja ordereid vaadata
+
+    // Alates E
+    // Erinevaid rolle
+    // SMS-de saatmist
+    // E-mailide saatmist
+    // UNIT testimist
+    // Heroku üles - serverisse nii back kui front
+
+    // ????
+
+    // Proovitööd üle
+
     @Autowired
     OrderRepository orderRepository;
 
