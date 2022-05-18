@@ -8,6 +8,7 @@ import Cart from './pages/Cart';
 import Login from './pages/Login';
 import MainPage from './pages/MainPage';
 import MaintainProducts from './pages/MaintainProducts';
+import Orders from './pages/Orders';
 import Signup from './pages/Signup';
 
 
@@ -43,6 +44,7 @@ function App() {
           <Navbar.Brand as={Link} to="/">Pood</Navbar.Brand>
           <Nav className="me-auto">
  { token && <Nav.Link as={Link} to="/admin">Adminstraatori vaatesse</Nav.Link>}
+ { token && <Nav.Link as={Link} to="/tellimused">Vaata oma tellimusi</Nav.Link>}
             <Nav.Link as={Link} to="/ostukorv">Ostukorvi</Nav.Link>
  { !token && <Nav.Link as={Link} to="/logi-sisse">Logi sisse</Nav.Link>}
  { !token && <Nav.Link as={Link} to="/registreeru">Registreeru</Nav.Link>}
@@ -58,6 +60,7 @@ function App() {
           <Route path='registreeru' exact element={ <Signup /> } />
       { token && 
           <Route> 
+            <Route path='tellimused' exact element={ <Orders /> } />
             <Route path='admin' exact element={ <Admin /> } />
             <Route path='admin/lisa-toode' exact element={ <AddProduct /> } />
             <Route path='admin/halda-tooted' exact element={ <MaintainProducts /> } />

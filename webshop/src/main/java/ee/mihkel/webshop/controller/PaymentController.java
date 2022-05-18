@@ -1,16 +1,21 @@
 package ee.mihkel.webshop.controller;
 
+import ee.mihkel.webshop.model.database.Person;
 import ee.mihkel.webshop.model.database.Product;
 import ee.mihkel.webshop.model.request.output.EveryPayUrl;
+import ee.mihkel.webshop.repository.PersonRepository;
 import ee.mihkel.webshop.service.OrderService;
 import ee.mihkel.webshop.service.PaymentService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Log4j2
 @CrossOrigin(origins = "http://localhost:3000")
 public class PaymentController {
 
@@ -23,6 +28,9 @@ public class PaymentController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    PersonRepository personRepository;
+
     @PostMapping("payment")  // localhost:8080/payment    Body    80   text
     public ResponseEntity<EveryPayUrl> getPaymentLink(@RequestBody List<Product> products) {
         // Tooted --- nimedega+hindadega
@@ -30,9 +38,13 @@ public class PaymentController {
         // Salvestan andmebaasi -> maksmata kujul
         // Võtan andmebaasist tema ID (mis on genereeritud)
         // ---> Lähen maksma
+        String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        Person person = personRepository.getByEmail(email);
+        log.info("Initialized payment link getting: {}", person.getPersonCode());
+
         List<Product> originalProducts = orderService.getAllProductsFromDb(products);
         double orderSum = orderService.calculateOrderSum(originalProducts);
-        Long id = orderService.saveToDatabase(originalProducts, orderSum);
+        Long id = orderService.saveToDatabase(originalProducts, orderSum, person);
         return ResponseEntity.ok().body(paymentService.getPaymentLink(orderSum, id));
     }
 

@@ -3,6 +3,7 @@ package ee.mihkel.webshop.service;
 import ee.mihkel.webshop.cache.ProductCache;
 import ee.mihkel.webshop.model.database.Order;
 import ee.mihkel.webshop.model.database.PaymentState;
+import ee.mihkel.webshop.model.database.Person;
 import ee.mihkel.webshop.model.database.Product;
 import ee.mihkel.webshop.repository.OrderRepository;
 import ee.mihkel.webshop.repository.ProductRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -23,10 +25,11 @@ public class OrderServiceImpl implements OrderService {
     // 1. Editimine print-screenidena
 
     // JÄRGMINE KORD:
-    // 1. Backendis Order salvestada koos isikuga
+    // 1. Backendis Order salvestada koos isikuga --
     // 2. Tagastada kõik orderid vastavalt kes küsib
     // 3. Valideerimised backis
     // 4. Frontend käsitleb erroreid
+    // 5. Frondis lisades tulevad kategooriad dropdownist
 
     // KODUS:
     // 1. Frontendis Kategooria - lisada, kustutada, vaadata
@@ -65,11 +68,13 @@ public class OrderServiceImpl implements OrderService {
 //            return sum;
     }
 
-    public Long saveToDatabase(List<Product> products, double orderSum) {
+    public Long saveToDatabase(List<Product> products, double orderSum, Person person) {
         Order order = new Order();
         order.setOrderSum(orderSum);
+        order.setCreationDate(new Date());
         order.setProducts(products);
         order.setPaymentState(PaymentState.INITIAL);
+        order.setPerson(person);
         Order savedOrder = orderRepository.save(order);
         return savedOrder.getId();
     }

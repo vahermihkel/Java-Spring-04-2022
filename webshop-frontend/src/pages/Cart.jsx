@@ -24,12 +24,21 @@ function Cart() {
   }
 
   function onPay() {
+    const authData = JSON.parse(sessionStorage.getItem("authData"));
+    const expiration = new Date(authData.expiration);
+    let token;
+    if (expiration > new Date()) {
+      token = authData.token;
+    } else {
+      sessionStorage.removeItem("authData");
+    }
+
     fetch("http://localhost:8080/payment", {
       method: "POST",
       body: JSON.stringify(cartProducts),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJ3ZWJzaG9wIiwic3ViIjoibUBtLmNvbSIsImV4cCI6MTY1MjI2OTM2MH0.jJlJS9ng0JwccZTSVO53yhLrIQCyeSE66_DX0ML1EVoCJWhTNLbMdGHYcTZd-KS1gYJVJ8G7GnQL46hbvOtsig"
+        "Authorization": `Bearer ${token}`
       }
     }).then(res => res.json())
     .then(body => window.location.href = body.url );
