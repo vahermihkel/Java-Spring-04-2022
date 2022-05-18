@@ -22,19 +22,23 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     // KODUS:
+    // 16.30
     // 1. Editimine print-screenidena
 
     // JÄRGMINE KORD:
     // 1. Backendis Order salvestada koos isikuga --
-    // 2. Tagastada kõik orderid vastavalt kes küsib
+    // 2. Tagastada kõik orderid vastavalt kes küsib --
     // 3. Valideerimised backis
     // 4. Frontend käsitleb erroreid
     // 5. Frondis lisades tulevad kategooriad dropdownist
 
+    // Frontendis kui on 403 - siis ütlen et pole sobivaid õigusi
+
+
     // KODUS:
     // 1. Frontendis Kategooria - lisada, kustutada, vaadata
-    // 2. Frontendis Orderid salvestada
-    // 3. Frontendis selle kasutaja ordereid vaadata
+    // 2. Frontendis Orderid salvestada --
+    // 3. Frontendis selle kasutaja ordereid vaadata --
 
     // Alates E
     // Erinevaid rolle

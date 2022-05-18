@@ -1,7 +1,6 @@
 package ee.mihkel.webshop.authentication;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,21 +36,29 @@ public class TokenParser extends BasicAuthenticationFilter {
             log.info(token);
             token = token.replace("Bearer ", "");
 
-            Claims claims = Jwts.parser()
-                    .setSigningKey(key)
-                    .parseClaimsJws(token)
-                    .getBody();
+            try {
+                Claims claims = Jwts.parser()
+                        .setSigningKey(key)
+                        .parseClaimsJws(token)
+                        .getBody();
 
-            String email = claims.getSubject();
-            String issuer = claims.getIssuer();
+                String email = claims.getSubject();
+                String issuer = claims.getIssuer();
 
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                    email,
-                    null,
-                    null
-            );
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                        email,
+                        null,
+                        null
+                );
 
-            SecurityContextHolder.getContext().setAuthentication(auth);
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            } catch (ExpiredJwtException |
+                    MalformedJwtException |
+                    UnsupportedJwtException |
+                    SignatureException |
+                    IllegalArgumentException e) {
+                log.error(e.getMessage());
+            }
         }
 
         super.doFilterInternal(request, response, chain);
