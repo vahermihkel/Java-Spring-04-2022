@@ -21,9 +21,6 @@ import java.util.stream.Collectors;
 @Log4j2
 public class OrderServiceImpl implements OrderService {
 
-    // KODUS:
-    // 16.30
-    // 1. Editimine print-screenidena
 
     // JÄRGMINE KORD:
     // 1. Backendis Order salvestada koos isikuga --

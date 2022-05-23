@@ -5,6 +5,7 @@ import './App.css';
 import AddProduct from './pages/AddProduct';
 import Admin from './pages/Admin';
 import Cart from './pages/Cart';
+import EditProduct from './pages/EditProduct';
 import Login from './pages/Login';
 import MainPage from './pages/MainPage';
 import MaintainProducts from './pages/MaintainProducts';
@@ -64,7 +65,7 @@ function App() {
             <Route path='admin' exact element={ <Admin /> } />
             <Route path='admin/lisa-toode' exact element={ <AddProduct /> } />
             <Route path='admin/halda-tooted' exact element={ <MaintainProducts /> } />
-            <Route path='admin/muuda-toode' exact element={<div>Toote muutmise leht</div>} />
+            <Route path='admin/muuda-toode/:id' exact element={ <EditProduct /> } />
           </Route>
           }
       { !token && <Route path='admin/*' exact element={ <Login /> } />}

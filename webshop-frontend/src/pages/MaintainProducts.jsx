@@ -92,7 +92,9 @@ function MaintainProducts() {
             <td>
               <Button onClick={() => decreaseQuantity(element)} variant="danger">-</Button>
               <Button onClick={() => increaseQuantity(element)} variant="success">+</Button>
-              <button>Muuda</button>
+              <Link to={"/admin/muuda-toode/" + element.id}>
+                <button>Muuda</button>
+              </Link>
               <Button onClick={() => deleteProduct(element)}>X</Button>
             </td>
           </tr>) } 
