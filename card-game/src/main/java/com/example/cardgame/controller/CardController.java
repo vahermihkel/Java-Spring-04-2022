@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin("localhost:3000")
+@CrossOrigin("http://localhost:3000")
 @RestController
 public class CardController {
     Card card;
@@ -14,7 +14,8 @@ public class CardController {
     @GetMapping("start-round")
     public Card startRound() {
         if (card == null) {
-            return new Card();
+            card = new Card();
+            return card;
         } else {
             return card;
         }
