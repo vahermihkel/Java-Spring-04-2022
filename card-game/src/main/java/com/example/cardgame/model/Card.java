@@ -9,8 +9,8 @@ public class Card {
     private final int value;
 
     public Card() {
-        this.suit = Suit.generateRandomSuit();
-        this.rank = Rank.generateRandomRank();
+        this.suit = Suit.generateRandom();
+        this.rank = Rank.generateRandom();
         this.value = getValueByRank();
     }
 

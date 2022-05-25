@@ -15,10 +15,8 @@ public class CardController {
     public Card startRound() {
         if (card == null) {
             card = new Card();
-            return card;
-        } else {
-            return card;
         }
+        return card;
     }
 
     @GetMapping("round-response/{choice}")
