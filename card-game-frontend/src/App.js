@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
   const [isGameStarted, setGameStarted] = useState(false);
   const [card, setCard] = useState({});
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(10);
   const [isAnswered, setIsAnswered] = useState(false);
   const [response, setResponse] = useState(false);
   const [isTimeout, setTimeout] = useState(false);
+  const timer = () => setSeconds(seconds - 1);
   
   function startGame() {
     fetch("http://localhost:8080/start-round")
@@ -15,26 +16,38 @@ function App() {
       .then(body => {
         setCard(body);
         setIsAnswered(false);
-        startTimer();
+        setSeconds(10);
         setGameStarted(true);
         setTimeout(false);
       })
   }
 
-  function startTimer() {
-    let seconds = 10;
-    setSeconds(seconds);
-    let timer = setInterval(() => {
-        seconds--;
-        setSeconds(seconds);
-      if (seconds === 0) {
-        clearInterval(timer);
-        setTimeout(true);
-      } else if (isAnswered === true) {
-        clearInterval(timer);
-      }
-    },1000);
-  }
+  // useEffect(() => {
+  //   let seconds = 10;
+  //   setSeconds(seconds);
+  //   let timer = setInterval(() => {
+  //       seconds--;
+  //       setSeconds(seconds);
+  //     if (seconds === 0) {
+  //       clearInterval(timer);
+  //       setTimeout(true);
+  //     } else if (isAnswered === true) {
+  //       clearInterval(timer);
+  //     }
+  //   },1000);
+  // },[])
+
+    useEffect(
+        () => {
+            if (seconds <= 0) {
+                setTimeout(true);
+                return;
+            }
+            const id = setInterval(timer, 1000);
+            return () => clearInterval(id);
+        },
+        [seconds]
+    );  
 
   function sendNextCardGuess(guess) {
     fetch("http://localhost:8080/round-response/" + guess)

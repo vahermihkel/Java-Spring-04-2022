@@ -1,6 +1,6 @@
 package com.example.cardgame.model;
 
-public enum Suit {
+public enum Suit implements GenerateRandomSuit {
     CLUB, DIAMOND, HEART, SPADE;
 
     public static Suit generateRandom() {

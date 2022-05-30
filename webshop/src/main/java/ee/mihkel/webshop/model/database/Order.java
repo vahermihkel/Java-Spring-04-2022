@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "orders")
-@SequenceGenerator(name="orderSeq", initialValue=5413132, allocationSize=1)
+@SequenceGenerator(name="orderSeq", initialValue=5499131, allocationSize=1)
 public class Order {
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="orderSeq")

@@ -28,7 +28,14 @@ function Login() {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(res => res.json())
+    }).then(res => {
+        if (res.status === 200) {
+          res.json();
+        } else {
+          console.log(res);
+          throw Error();
+        }
+      })
       .then(body => {
         sessionStorage.setItem("authData", JSON.stringify(body));
         navigate("/");

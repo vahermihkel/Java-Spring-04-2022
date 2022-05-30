@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.validation.ValidationException;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
@@ -96,7 +97,7 @@ public class ErrorHandler {
         response.setHttpStatus(HttpStatus.BAD_REQUEST);
         response.setHttpStatusCode(HttpStatus.BAD_REQUEST.value());
         response.setTimestamp(new Date());
-        response.setMessage(e.getMessage());
+        response.setMessage(e.getMessage() + " (personCode)");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
@@ -110,6 +111,16 @@ public class ErrorHandler {
         // String tagastus = "Email " + muutuja + " juba eksisteerib.";
         // response.setMessage(e.getMessage().split("Key")[1].split("=")[1].split(" ")[2]);
         response.setMessage(e.getMessage().split("Key")[1]);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleException(ValidationException e) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setHttpStatusCode(HttpStatus.BAD_REQUEST.value());
+        response.setTimestamp(new Date());
+        response.setMessage("Kõik nõutud väljad on täitmata");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
