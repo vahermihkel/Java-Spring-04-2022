@@ -30,7 +30,7 @@ function Login() {
       }
     }).then(res => {
         if (res.status === 200) {
-          res.json();
+          return res.json();
         } else {
           console.log(res);
           throw Error();

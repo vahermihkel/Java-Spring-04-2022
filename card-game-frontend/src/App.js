@@ -4,11 +4,11 @@ import './App.css';
 function App() {
   const [isGameStarted, setGameStarted] = useState(false);
   const [card, setCard] = useState({});
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(10); // 1.
   const [isAnswered, setIsAnswered] = useState(false);
   const [response, setResponse] = useState(false);
   const [isTimeout, setTimeout] = useState(false);
-  const timer = () => setSeconds(seconds - 1);
+  const timer = () => setSeconds(seconds - 1); // 2.
   
   function startGame() {
     fetch("http://localhost:8080/start-round")
@@ -16,7 +16,7 @@ function App() {
       .then(body => {
         setCard(body);
         setIsAnswered(false);
-        setSeconds(10);
+        setSeconds(10); // 3. 
         setGameStarted(true);
         setTimeout(false);
       })
@@ -41,6 +41,7 @@ function App() {
         () => {
             if (seconds <= 0) {
                 setTimeout(true);
+                fetch("http://localhost:8080/timeout")
                 return;
             }
             const id = setInterval(timer, 1000);

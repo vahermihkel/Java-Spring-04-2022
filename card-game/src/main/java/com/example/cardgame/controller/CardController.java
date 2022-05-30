@@ -33,4 +33,9 @@ public class CardController {
         card = newCard;
         return choice.equals(result);
     }
+
+    @GetMapping("timeout")
+    public void timeout() {
+        card = new Card();
+    }
 }
