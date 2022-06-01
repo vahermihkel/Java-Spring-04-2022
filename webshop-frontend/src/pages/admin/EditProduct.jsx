@@ -27,6 +27,7 @@ function EditProduct() {
       description: descriptionRef.current.value,
       stock: stockRef.current.value,
       active: activeRef.current.checked,
+      category: product.category
     }
 
     const authData = JSON.parse(sessionStorage.getItem("authData"));
@@ -68,7 +69,7 @@ function EditProduct() {
         <label>Laoseis</label> <br />
         <input ref={stockRef} defaultValue={product.stock} type="number" /> <br />
         <label>Aktiivne</label> <br />
-        <input ref={activeRef} defaultValue={product.active} type="checkbox" /> <br />
+        <input ref={activeRef} defaultChecked={product.active} type="checkbox" /> <br />
         <Button onClick={editProduct} variant="success">Muuda toode</Button>
       </div> }
     </div>)

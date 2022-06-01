@@ -52,8 +52,19 @@ function Cart() {
       <button onClick={() => deleteFromCart(index)}>X</button>
     </div>
     )}
-      <div>Kokku: {calculateSumOfCart() } €</div>
-      <button onClick={onPay}>Maksma</button>
+     {  
+     cartProducts.length > 0 &&
+      <div>
+        <div>Kokku: {calculateSumOfCart() } €</div>
+        <button onClick={onPay}>Maksma</button>
+      </div>
+     }
+     {  
+     cartProducts.length === 0 &&
+      <div>
+        Ostukorv on tühi
+      </div>
+     }
     </div>)
 }
 

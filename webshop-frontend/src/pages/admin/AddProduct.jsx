@@ -13,6 +13,7 @@ function AddProduct() {
   const navigation = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [categories, setCategories] = useState([]);
+  const [isAllOk, setAllOk] = useState(false);
   //document.getElementById("name").value
 
   const authData = JSON.parse(sessionStorage.getItem("authData"));
@@ -74,6 +75,16 @@ function AddProduct() {
     setSubcategories(subcategories);
   }
 
+  function checkIfAllOk() {
+    if (nameRef.current.value !== "" &&
+          priceRef.current.value !== "" &&
+            categoryRef.current.value !== "") {
+      setAllOk(true);
+    } else {
+      setAllOk(false);
+    }
+  }
+
   return (
     <div>
       <Link to="/admin">
@@ -81,9 +92,9 @@ function AddProduct() {
       </Link>   <br />
       <div>{errorMessage}</div>
       <label>Nimi*</label> <br />
-      <input ref={nameRef} type="text" /> <br />
+      <input onChange={checkIfAllOk} ref={nameRef} type="text" /> <br />
       <label>Hind*</label> <br />
-      <input ref={priceRef} type="number" /> <br />
+      <input onChange={checkIfAllOk} ref={priceRef} type="number" /> <br />
       <label>Vali ülemkategooria*</label> <br />
       {/* <input ref={categoryRef} type="number" /> <br /> */}
 
@@ -93,7 +104,7 @@ function AddProduct() {
       </select> <br />
 
       { selectedCategories.length > 0 && 
-      <select ref={categoryRef}>
+      <select onChange={checkIfAllOk} ref={categoryRef}>
         <option value="" disabled selected>Vali tootele kategooria</option>
           { selectedCategories.map(element => <option value={element.id}>{element.name}</option>) }
       </select>} <br />
@@ -107,7 +118,7 @@ function AddProduct() {
       <input ref={stockRef} type="number" /> <br />
       <label>Aktiivne</label> <br />
       <input ref={activeRef} type="checkbox" /> <br />
-      <Button onClick={addNewProduct} variant="success">Sisesta uus toode</Button>
+      <Button disabled={!isAllOk} onClick={addNewProduct} variant="success">Sisesta uus toode</Button>
     </div>)
 }
 

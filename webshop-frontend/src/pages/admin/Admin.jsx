@@ -9,7 +9,13 @@ function Admin() {
       </Link>   
       <Link to="/admin/halda-tooted">
         <Button>Halda tooteid</Button>
-      </Link>    
+      </Link>
+      <Link to="/admin/lisa-admin">
+        <Button>Lisa admin</Button>
+      </Link>   
+      <Link to="/admin/halda-admine">
+        <Button>Halda admine</Button>
+      </Link>       
   </div>
   )
 }

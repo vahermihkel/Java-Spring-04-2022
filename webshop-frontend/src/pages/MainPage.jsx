@@ -22,7 +22,7 @@ function MainPage() {
 
   return (
   <div>
-       { products.map(element => 
+       { products.filter(element => element.active).map(element => 
           <div>
             <div>{element.name}</div>
             <div>{element.price} €</div>
