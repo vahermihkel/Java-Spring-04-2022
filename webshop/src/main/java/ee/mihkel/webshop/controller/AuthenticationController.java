@@ -22,7 +22,6 @@ import javax.validation.ValidationException;
 import java.sql.SQLException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @Log4j2
 public class AuthenticationController {
 
@@ -71,7 +70,7 @@ public class AuthenticationController {
         }
         boolean matches = passwordEncoder.matches(loginData.getPassword(),person.getPassword());
         if (matches) {
-            AuthData authData = tokenGenerator.createAuthToken(loginData.getEmail());
+            AuthData authData = tokenGenerator.createAuthToken(person);
             return ResponseEntity.ok().body(authData);
         } else {
             throw new InvalidPasswordException();

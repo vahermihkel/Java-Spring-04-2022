@@ -17,7 +17,6 @@ import java.util.concurrent.ExecutionException;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
 
     @Autowired

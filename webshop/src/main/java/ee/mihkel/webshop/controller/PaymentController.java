@@ -16,7 +16,6 @@ import java.util.List;
 
 @RestController
 @Log4j2
-@CrossOrigin(origins = "http://localhost:3000")
 public class PaymentController {
 
     @Autowired

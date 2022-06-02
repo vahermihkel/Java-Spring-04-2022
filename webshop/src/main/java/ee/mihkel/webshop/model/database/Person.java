@@ -43,4 +43,6 @@ public class Person {
     @NotNull
     @NotBlank
     private String password;
+
+    private String role;
 }

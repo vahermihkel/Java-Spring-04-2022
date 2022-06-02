@@ -8,6 +8,7 @@ function AddAdmin() {
   const navigation = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [isAllOk, setAllOk] = useState(false);
+  const [person, setPerson] = useState(null);
 
   const authData = JSON.parse(sessionStorage.getItem("authData"));
     const expiration = new Date(authData.expiration);
@@ -18,49 +19,32 @@ function AddAdmin() {
       sessionStorage.removeItem("authData");
     }
 
-  // ÜHE OTSIMIST
-  // useEffect(() => {
-  //   fetch("http://localhost:8080/category",{
-  //     headers: {
-  //       "Authorization": `Bearer ${token}`
-  //     }
-  //   }).then(res => res.json())
-  //   .then(body => setCategories(body));
-  // }, [token]);
+  function findPerson() {
+    fetch("http://localhost:8080/person/" + personCodeRef.current.value,{
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }).then(res => res.json())
+    .then(body => setPerson(body));
+  }
 
-  // MUUDA TA ADMINIKS
-  // function addNewProduct() {
-  //   const newProduct = {
-  //     name: nameRef.current.value,
-  //     price: priceRef.current.value,
-  //     imgSrc: imgSrcRef.current.value,
-  //     description: descriptionRef.current.value,
-  //     stock: stockRef.current.value,
-  //     active: activeRef.current.checked,
-  //     category: {id: categoryRef.current.value},
-  //   }
+  function changeToAdmin() {
+    fetch("http://localhost:8080/add-admin/" + personCodeRef.current.value,{
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+  }  
 
-  //   fetch("http://localhost:8080/products",
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify(newProduct),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Authorization": `Bearer ${token}`
-  //         // "Authorization": "Bearer " + token
-  //       }
-  //     }
-  //   ).then(res => {
-  //     if (res.status === 201) {
-  //       setErrorMessage("");
-  //       navigation("/admin/halda-tooted")
-  //     } else {
-  //       console.log(res);
-  //       setErrorMessage("Nõutud väljad on täitmata");
-  //       throw Error();
-  //     }
-  //   })
-  // }
+  function changeToSuperAdmin() {
+    fetch("http://localhost:8080/add-super-admin/" + personCodeRef.current.value,{
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+  }  
 
   function checkIfAllOk() {
     // if (personCodeRef.current.value !== "") {
@@ -77,8 +61,21 @@ function AddAdmin() {
       </Link>   <br />
       <div>{errorMessage}</div>
       <label>Isikukood*</label> <br />
-      <input onChange={checkIfAllOk} ref={personCodeRef} type="text" /> <br />
-      <Button disabled={!isAllOk} variant="success">Otsi kasutaja üles</Button>
+      <input onChange={checkIfAllOk} ref={personCodeRef} type="number" /> <br />
+      <Button disabled={!isAllOk} onClick={findPerson} variant="success">Otsi kasutaja üles</Button>
+      {
+        person && person.email && 
+        <div>
+          <div>Nimi: {person.firstName + " " + person.lastName}</div>
+          <div>Email: {person.email}</div>
+          <button onClick={changeToAdmin}>Muuda adminiks</button>
+          <button onClick={changeToSuperAdmin}>Muuda super adminiks</button>
+        </div>
+      }
+      {
+        person && !person.email &&
+        <div>Kasutajat ei leitud, kontrolli isikukoodi</div>
+      }
     </div>)
 }
 
