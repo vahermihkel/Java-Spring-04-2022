@@ -27,7 +27,7 @@ public class AdminRoleController {
     public void addPersonAsAdmin(@PathVariable String personCode) throws PersonNotFoundException {
         if (personRepository.findById(personCode).isPresent()) {
             Person person = personRepository.findById(personCode).get();
-            person.setRole("ADMIN");
+            person.setRole("ROLE_ADMIN");
             personRepository.save(person);
         } else {
             throw new PersonNotFoundException();
@@ -38,7 +38,7 @@ public class AdminRoleController {
     public void addPersonAsSuperAdmin(@PathVariable String personCode) throws PersonNotFoundException {
         if (personRepository.findById(personCode).isPresent()) {
             Person person = personRepository.findById(personCode).get();
-            person.setRole("SUPER_ADMIN");
+            person.setRole("ROLE_SUPER_ADMIN");
             personRepository.save(person);
         } else {
             throw new PersonNotFoundException();
@@ -47,12 +47,12 @@ public class AdminRoleController {
 
     @GetMapping("get-admins")
     public List<Person> getAdmins() {
-        return personRepository.getAllByRole("ADMIN");
+        return personRepository.getAllByRole("ROLE_ADMIN");
     }
 
     @GetMapping("get-super-admins")
     public List<Person> getSuperAdmins() {
-        return personRepository.getAllByRole("SUPER_ADMIN");
+        return personRepository.getAllByRole("ROLE_SUPER_ADMIN");
     }
 
     // http://localhost:8080/delete-role/31

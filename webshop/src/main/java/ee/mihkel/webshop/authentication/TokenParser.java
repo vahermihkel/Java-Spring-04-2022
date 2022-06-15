@@ -54,6 +54,8 @@ public class TokenParser extends BasicAuthenticationFilter {
                 String email = claims.getSubject();
                 String role = claims.getIssuer();
 
+                System.out.println(role);
+
                 GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role);
                 List<GrantedAuthority> roles = new ArrayList<>(Collections.singletonList(grantedAuthority));
 
